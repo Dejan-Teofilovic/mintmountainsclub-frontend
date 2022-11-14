@@ -16,4 +16,5 @@ code {
   background: url(../public/assets/images/background.png) no-repeat center
     center fixed;
   background-size: cover;
+  overflow: hidden;
 }

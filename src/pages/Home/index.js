@@ -38,8 +38,8 @@ export default function Home() {
       if (CURRENT_STEP < 3) {
         const hexProof = (await api.put(`/merkleTree/getHexProof/${currentAccount}`, { wlNumber: CURRENT_STEP })).data;
         console.log('>>>>>>>> hexProof => ', hexProof);
-        if(hexProof.length == 0) {
-          return openAlert({ severity: ERROR, message: "You can't mint now because you aren't registered in our whitelist address. Please wait for our public mint." })
+        if (hexProof.length == 0) {
+          return openAlert({ severity: ERROR, message: "You can't mint now because you aren't registered in our whitelist address. Please wait for our public mint." });
         }
         if (CURRENT_STEP === 1) {
           //  Special mint
@@ -62,43 +62,45 @@ export default function Home() {
     }
   };
   return (
-    <Stack direction="row" justifyContent="center" width="100%" mt={20}>
-      <Card sx={{ maxWidth: 300, minWidth: 300 }}>
-        <CardContent>
-          <Stack spacing={2} alignItems="center">
-            <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-              <IconButton
-                sx={{ fontSize: 24, color: theme.palette.primary.main }}
-                onClick={() => decreaseMintAmount()}
-                disabled={mintAmount <= 1}
-              >
-                <Icon icon="ant-design:minus-circle-outlined" />
-              </IconButton>
+    <Box position="relative" zIndex={20}>
+      <Stack direction="row" justifyContent="center" width="100%" mt={20} >
+        <Card sx={{ maxWidth: 300, minWidth: 300, '&.MuiCard-root': { backgroundColor: 'rgba(255, 255, 255, 0.7)' } }}>
+          <CardContent>
+            <Stack spacing={2} alignItems="center">
+              <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                <IconButton
+                  sx={{ fontSize: 24, color: theme.palette.primary.main }}
+                  onClick={() => decreaseMintAmount()}
+                  disabled={mintAmount <= 1}
+                >
+                  <Icon icon="ant-design:minus-circle-outlined" />
+                </IconButton>
 
-              <Box>
-                <Typography fontSize={36} textAlign="center">{mintAmount}</Typography>
-              </Box>
+                <Box>
+                  <Typography fontSize={36} textAlign="center">{mintAmount}</Typography>
+                </Box>
 
-              <IconButton
-                sx={{ fontSize: 24, color: theme.palette.primary.main }}
-                onClick={() => increaseMintAmount()}
-                disabled={mintAmount >= MINT_AMOUNT_LIMIT}
-              >
-                <Icon icon="ant-design:plus-circle-outlined" />
-              </IconButton>
+                <IconButton
+                  sx={{ fontSize: 24, color: theme.palette.primary.main }}
+                  onClick={() => increaseMintAmount()}
+                  disabled={mintAmount >= MINT_AMOUNT_LIMIT}
+                >
+                  <Icon icon="ant-design:plus-circle-outlined" />
+                </IconButton>
+              </Stack>
+
+              <Stack direction="row" justifyContent="center">
+                <Button
+                  size="large"
+                  variant="contained"
+                  disabled={!currentAccount}
+                  onClick={() => mint()}
+                >Mint</Button>
+              </Stack>
             </Stack>
-
-            <Stack direction="row" justifyContent="center">
-              <Button
-                size="large"
-                variant="contained"
-                disabled={!currentAccount}
-                onClick={() => mint()}
-              >Mint</Button>
-            </Stack>
-          </Stack>
-        </CardContent>
-      </Card>
-    </Stack>
+          </CardContent>
+        </Card>
+      </Stack>
+    </Box>
   );
 }
