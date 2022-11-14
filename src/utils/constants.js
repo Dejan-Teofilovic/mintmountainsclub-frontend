@@ -4,7 +4,7 @@
  * 2: whitelist event
  * 3: public
  */
-export const CURRENT_STEP = 2;
+export const CURRENT_STEP = 1;
 
 /**
  * Update this value whenever each step is finished
@@ -12,7 +12,7 @@ export const CURRENT_STEP = 2;
  * 2: whitelist event
  * 4: public
  */
-export const MINT_AMOUNT_LIMIT = 2;
+export const MINT_AMOUNT_LIMIT = 1;
 
 export const PRICE_FOR_SPECIAL = 0.08;
 export const PRICE_FOR_WHITELIST = 0.16;
@@ -52,7 +52,7 @@ export const DECIMALS = 18;
 export const SWITCH_ERROR_CODE = 4902;
 export const TRUE = 'true';
 export const NO_ETHEREUM_OBJECT = /No Ethereum provider was found on window.ethereum/;
-export const CONTRACT_ADDRESS = '0x2F336358af6650bb2a8b11781A8929874b1FBB6e';
+export const CONTRACT_ADDRESS = '0xB2De08667A3400d316D16f8B53800800016A37Ee';
 export const CONTRACT_ABI = [
   {
     "inputs": [],
@@ -558,6 +558,19 @@ export const CONTRACT_ABI = [
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "setMerkleRoot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes32",
         "name": "_whitelistMerkleRoot",
         "type": "bytes32"
@@ -728,7 +741,7 @@ export const CONTRACT_ABI = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_addr",
+        "name": "__addr",
         "type": "address"
       }
     ],
