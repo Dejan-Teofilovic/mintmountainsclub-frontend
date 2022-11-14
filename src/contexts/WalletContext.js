@@ -11,8 +11,6 @@ import {
     NATIVE_CURRENCY_NAME,
     NATIVE_CURRENCY_SYMBOL,
     DECIMALS,
-    CONTRACT_ABI,
-    CONTRACT_ADDRESS
 } from '../utils/constants';
 import { AlertMessageContext } from './AlertMessageContext';
 import { isNoEthereumObject } from '../utils/errors';
@@ -64,9 +62,7 @@ function WalletProvider({ children }) {
     const { active, activate, deactivate, account, chainId } = useWeb3React();
 
     const connectWallet = () => {
-        console.log('>>>> before activate =>')
         activate(injected, (error) => {
-            console.log('>>>> error => ', error)
             if (isNoEthereumObject(error))
                 window.open("https://metamask.io/download.html");
         });
@@ -82,19 +78,6 @@ function WalletProvider({ children }) {
         dispatch({
             type: 'SET_WALLET_CONNECTED',
             payload: false
-        });
-    };
-
-    const getTokenId = async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        // console.log('# process.env.REACT_APP_CONTRACT_ADDRESS: ', process.env.REACT_APP_CONTRACT_ADDRESS);
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-        const { _hex } = await contract.getTokenId();
-
-        dispatch({
-            type: 'SET_TOKEN_ID',
-            payload: Number(_hex)
         });
     };
 
@@ -182,7 +165,6 @@ function WalletProvider({ children }) {
                         return;
                     }
                 }
-                getTokenId();
             }
         })();
     }, [chainId]);
@@ -198,8 +180,6 @@ function WalletProvider({ children }) {
                 type: 'SET_WALLET_CONNECTED',
                 payload: true
             });
-
-            getTokenId();
         }
     }, []);
 

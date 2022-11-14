@@ -1,15 +1,32 @@
-import React from 'react';
-import { Button, Stack, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Card, CardContent, IconButton, Stack, Typography, useTheme } from '@mui/material';
 import { ethers } from "ethers";
+import { Icon } from '@iconify/react';
 import useWallet from '../../hooks/useWallet';
 import {
-  CONTRACT_ABI, CONTRACT_ADDRESS, CURRENT_STEP, PRICE_FOR_PUBLIC, PRICE_FOR_SPECIAL, PRICE_FOR_WHITELIST, SERVER_BASE_URL
+  CONTRACT_ABI, CONTRACT_ADDRESS, CURRENT_STEP, ERROR, MINT_AMOUNT_LIMIT, PRICE_FOR_PUBLIC, PRICE_FOR_SPECIAL, PRICE_FOR_WHITELIST, SUCCESS
 } from '../../utils/constants';
 import useAlertMessage from '../../hooks/useAlertMessage';
+import api from '../../utils/api';
 
 export default function Home() {
   const { currentAccount } = useWallet();
   const { openAlert } = useAlertMessage();
+  const theme = useTheme();
+
+  const [mintAmount, setMintAmount] = useState(1);
+
+  const increaseMintAmount = () => {
+    if (mintAmount < MINT_AMOUNT_LIMIT) {
+      setMintAmount(mintAmount + 1);
+    }
+  };
+
+  const decreaseMintAmount = () => {
+    if (mintAmount > 1) {
+      setMintAmount(mintAmount - 1);
+    }
+  };
 
   const mint = async () => {
     try {
@@ -18,20 +35,70 @@ export default function Home() {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
       let transaction = null;
 
-      
+      if (CURRENT_STEP < 3) {
+        const hexProof = (await api.put(`/merkleTree/getHexProof/${currentAccount}`, { wlNumber: CURRENT_STEP })).data;
+        console.log('>>>>>>>> hexProof => ', hexProof);
+        if(hexProof.length == 0) {
+          return openAlert({ severity: ERROR, message: "You can't mint now because you aren't registered in our whitelist address. Please wait for our public mint." })
+        }
+        if (CURRENT_STEP === 1) {
+          //  Special mint
+          transaction = await contract.allowlistmint1(hexProof, mintAmount, { value: ethers.utils.parseEther(String(PRICE_FOR_SPECIAL)) });
+        } else {
+          //  Whitelist mint
+          transaction = await contract.allowlistmint2(hexProof, mintAmount, { value: ethers.utils.parseEther(String(PRICE_FOR_WHITELIST)) });
+        }
+      } else {
+        //  Public mint
+        transaction = await contract.publicMint(mintAmount, { value: ethers.utils.parseEther(String(PRICE_FOR_PUBLIC)) });
+      }
+
+      await transaction.wait();
+      openAlert({ severity: SUCCESS, message: 'Minted!' });
 
     } catch (error) {
-      openAlert({ severity: 'error', message: error.data ? error.data.message : 'Transaction is failed.' });
+      console.log('>>>>>> error => ', error);
+      openAlert({ severity: ERROR, message: error.data ? error.data.message : 'Transaction is failed.' });
     }
   };
   return (
-    <Stack alignItems="center" justifyContent="center" sx={{ mt: '20vh' }} spacing={2}>
-      <Stack alignItems="center" justifyContent="center" spacing={1} direction="row">
-        <TextField type="number" min="0" />
-      </Stack>
-      <Stack direction="row" justifyContent="center">
-        <Button variant="contained">Mint</Button>
-      </Stack>
+    <Stack direction="row" justifyContent="center" width="100%" mt={20}>
+      <Card sx={{ maxWidth: 300, minWidth: 300 }}>
+        <CardContent>
+          <Stack spacing={2} alignItems="center">
+            <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+              <IconButton
+                sx={{ fontSize: 24, color: theme.palette.primary.main }}
+                onClick={() => decreaseMintAmount()}
+                disabled={mintAmount <= 1}
+              >
+                <Icon icon="ant-design:minus-circle-outlined" />
+              </IconButton>
+
+              <Box>
+                <Typography fontSize={36} textAlign="center">{mintAmount}</Typography>
+              </Box>
+
+              <IconButton
+                sx={{ fontSize: 24, color: theme.palette.primary.main }}
+                onClick={() => increaseMintAmount()}
+                disabled={mintAmount >= MINT_AMOUNT_LIMIT}
+              >
+                <Icon icon="ant-design:plus-circle-outlined" />
+              </IconButton>
+            </Stack>
+
+            <Stack direction="row" justifyContent="center">
+              <Button
+                size="large"
+                variant="contained"
+                disabled={!currentAccount}
+                onClick={() => mint()}
+              >Mint</Button>
+            </Stack>
+          </Stack>
+        </CardContent>
+      </Card>
     </Stack>
   );
 }
