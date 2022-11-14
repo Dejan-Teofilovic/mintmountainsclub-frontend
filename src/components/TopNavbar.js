@@ -35,9 +35,9 @@ export default function TopNavbar() {
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: 'rgba(10, 10, 10, 0.8)',
+        backgroundColor: 'rgba(10, 10, 10, 0)',
         py: { md: 1 },
-        borderBottom: `1px solid #111111`
+        boxShadow: 'none'
       }}>
       <Container maxWidth="xl">
         <Toolbar>

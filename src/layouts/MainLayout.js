@@ -7,7 +7,7 @@ import AlertMessage from '../components/AlertMessage';
 
 export default function MainLayout() {
   return (
-    <Box minHeight="100vh">
+    <Box className="bg-main" sx={{ minHeight: '100vh' }}>
       <Stack sx={{ minHeight: 'inherit' }}>
         <TopNavbar />
         <Box flexGrow={1}>
