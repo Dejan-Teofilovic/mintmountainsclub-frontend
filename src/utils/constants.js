@@ -52,8 +52,8 @@ export const DECIMALS = 18;
 export const SWITCH_ERROR_CODE = 4902;
 export const TRUE = 'true';
 export const NO_ETHEREUM_OBJECT = /No Ethereum provider was found on window.ethereum/;
-export const CONTRACT_ADDRESS = '0xe32AC7265f3c82c5E699149Aec6dfD7C2a72b66a';
-export const CONTRACT_ABI = [
+export const CONTRACT_ADDRESS = '0x08ee3634c2Eb204812A8D6a570EE90c0D1663E95';
+export const CONTRACT_ABI =  [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
@@ -558,19 +558,6 @@ export const CONTRACT_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
-      }
-    ],
-    "name": "setMerkleRoot",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bytes32",
         "name": "_whitelistMerkleRoot",
         "type": "bytes32"
@@ -741,7 +728,7 @@ export const CONTRACT_ABI = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "__addr",
+        "name": "_addr",
         "type": "address"
       }
     ],
