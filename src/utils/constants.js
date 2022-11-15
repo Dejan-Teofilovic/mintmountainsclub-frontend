@@ -32,22 +32,22 @@ export const ERROR = 'error';
 export const WARNING = 'warning';
 
 //  Test Goerli
-export const CHAIN_ID = 5;
-export const CHAIN_NAME = 'Testnet Goerli';
-export const RPC_URLS = ['https://goerli.infura.io/v3/'];
-export const BLOCK_EXPLORER_URLS = ['https://goerli.etherscan.io'];
+// export const CHAIN_ID = 5;
+// export const CHAIN_NAME = 'Testnet Goerli';
+// export const RPC_URLS = ['https://goerli.infura.io/v3/'];
+// export const BLOCK_EXPLORER_URLS = ['https://goerli.etherscan.io'];
+// export const NATIVE_CURRENCY_NAME = 'ETH';
+// export const NATIVE_CURRENCY_SYMBOL = 'ETH';
+// export const DECIMALS = 18;
+
+//  Ethereum
+export const CHAIN_ID = 1;
+export const CHAIN_NAME = 'Ethereum';
+export const RPC_URLS = ['https://mainnet.infura.io/v3/'];
+export const BLOCK_EXPLORER_URLS = ['https://etherscan.io'];
 export const NATIVE_CURRENCY_NAME = 'ETH';
 export const NATIVE_CURRENCY_SYMBOL = 'ETH';
 export const DECIMALS = 18;
-
-//  Polygon
-//  export const CHAIN_ID = 137;
-//  export const CHAIN_NAME = 'Polygon';
-//  export const RPC_URLS = ['https://polygon-rpc.com'];
-//  export const BLOCK_EXPLORER_URLS = ['https://polygonscan.com/'];
-//  export const NATIVE_CURRENCY_NAME = 'MATIC';
-//  export const NATIVE_CURRENCY_SYMBOL = 'MATIC';
-//  export const DECIMALS = 18;
 
 export const SWITCH_ERROR_CODE = 4902;
 export const TRUE = 'true';
