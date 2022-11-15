@@ -15,8 +15,8 @@ export const CURRENT_STEP = 1;
 export const MINT_AMOUNT_LIMIT = 1;
 
 export const PRICE_FOR_SPECIAL = 0.08;
-export const PRICE_FOR_WHITELIST = 0.16;
-export const PRICE_FOR_PUBLIC = 0.20;
+export const PRICE_FOR_WHITELIST = 0.1;
+export const PRICE_FOR_PUBLIC = 0.2;
 
 
 export const ROUTES = [
@@ -52,7 +52,7 @@ export const DECIMALS = 18;
 export const SWITCH_ERROR_CODE = 4902;
 export const TRUE = 'true';
 export const NO_ETHEREUM_OBJECT = /No Ethereum provider was found on window.ethereum/;
-export const CONTRACT_ADDRESS = '0xB2De08667A3400d316D16f8B53800800016A37Ee';
+export const CONTRACT_ADDRESS = '0xe32AC7265f3c82c5E699149Aec6dfD7C2a72b66a';
 export const CONTRACT_ABI = [
   {
     "inputs": [],
