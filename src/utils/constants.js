@@ -4,7 +4,7 @@
  * 2: whitelist event
  * 3: public
  */
-export const CURRENT_STEP = 1;
+export const CURRENT_STEP = 2;
 
 /**
  * Update this value whenever each step is finished
@@ -12,7 +12,7 @@ export const CURRENT_STEP = 1;
  * 2: whitelist event
  * 4: public
  */
-export const MINT_AMOUNT_LIMIT = 1;
+export const MINT_AMOUNT_LIMIT = 2;
 
 export const PRICE_FOR_SPECIAL = 0.08;
 export const PRICE_FOR_WHITELIST = 0.1;
