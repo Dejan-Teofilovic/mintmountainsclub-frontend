@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Button, Card, CardContent, IconButton, Stack, Typography, useTheme } from '@mui/material';
 import { ethers } from "ethers";
 import { Icon } from '@iconify/react';
@@ -15,6 +15,16 @@ export default function Home() {
   const theme = useTheme();
 
   const [mintAmount, setMintAmount] = useState(1);
+
+  const pricePerNft = useMemo(() => {
+    if (CURRENT_STEP === 1) {
+      return PRICE_FOR_SPECIAL;
+    } else if (CURRENT_STEP === 2) {
+      return PRICE_FOR_WHITELIST;
+    } else {
+      return PRICE_FOR_PUBLIC;
+    }
+  }, [CURRENT_STEP]);
 
   const increaseMintAmount = () => {
     if (mintAmount < MINT_AMOUNT_LIMIT) {
@@ -38,7 +48,7 @@ export default function Home() {
       if (CURRENT_STEP < 3) {
         const hexProof = (await api.put(`/merkleTree/getHexProof/${currentAccount}`, { wlNumber: CURRENT_STEP })).data;
         console.log('>>>>>>>> hexProof => ', hexProof);
-        if (hexProof.length == 0) {
+        if (hexProof.length === 0) {
           return openAlert({ severity: ERROR, message: "You can't mint now because you aren't registered in our whitelist address. Please wait for our public mint." });
         }
         if (CURRENT_STEP === 1) {
@@ -67,6 +77,7 @@ export default function Home() {
         <Card sx={{ maxWidth: 300, minWidth: 300, '&.MuiCard-root': { backgroundColor: 'rgba(255, 255, 255, 0.7)' } }}>
           <CardContent>
             <Stack spacing={2} alignItems="center">
+              {/* Select quantity */}
               <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
                 <IconButton
                   sx={{ fontSize: 24, color: theme.palette.primary.main }}
@@ -89,6 +100,11 @@ export default function Home() {
                 </IconButton>
               </Stack>
 
+              <Typography fontSize={36} textAlign="center" fontWeight={900}>
+                {mintAmount * pricePerNft} ETH
+              </Typography>
+
+              {/* Mint button */}
               <Stack direction="row" justifyContent="center">
                 <Button
                   size="large"
