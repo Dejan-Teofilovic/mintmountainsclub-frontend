@@ -62,10 +62,10 @@ function WalletProvider({ children }) {
     const { active, activate, deactivate, account, chainId } = useWeb3React();
 
     const connectWallet = () => {
-        activate(injected, (error) => {
-            if (isNoEthereumObject(error))
-                window.open("https://metamask.io/download.html");
-        });
+        // activate(injected, (error) => {
+        //     if (isNoEthereumObject(error))
+        //         window.open("https://metamask.io/download.html");
+        // });
     };
 
     const disconnectWallet = () => {
